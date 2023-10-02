@@ -29,8 +29,10 @@
 	{#await fEntryPromise then fEntry}
 		{#if fEntry.entry_type === 'Folder'}
 			<Index {fEntry} {path} />
+		{:else if fEntry.entry_type === 'File'}
+			<Contents {fEntry} {path} />
 		{:else}
-			<Contents {fEntry} />
+			<h1>Unrecognized Item Type</h1>
 		{/if}
 	{/await}
 </main>

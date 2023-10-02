@@ -1,6 +1,17 @@
 <script>
+	import { onMount } from 'svelte';
+
 	export let fEntry;
+	export let path;
+
+	$: contentPromise = new Promise(() => {});
+
+	onMount(() => {
+		contentPromise = fetch('/collab/' + path + '/').then((t) => t.json());
+	});
 </script>
+
+{@debug contentPromise}
 
 <center>
 	<h1>
@@ -11,9 +22,11 @@
 	</h1>
 </center>
 
-<div class="contents">
-	{fEntry.contents}
-</div>
+{#await contentPromise then contentEntry}
+	<div class="contents">
+		{contentEntry.contents}
+	</div>
+{/await}
 
 <style>
 	.header {

@@ -18,13 +18,17 @@
 		expanded = !expanded;
 		if (expanded) {
 			//reload
-			const resp = await fetch('/api' + path + '/' + fe.name);
+			const resp = await fetch('/api/' + path + '/' + fe.name);
 			fChildrenPromise = resp.json();
 		}
 	}
 
-	function onItemClick() {
-		window.location.pathname = '/f' + path + '/' + fe.name;
+	function onItemClick(e) {
+		if (e.shiftKey) {
+			window.location.pathname = '/raw/' + path + '/' + fe.name;
+		} else {
+			window.location.pathname = '/f/' + path + '/' + fe.name;
+		}
 	}
 
 	function isFolder() {
