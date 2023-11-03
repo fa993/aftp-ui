@@ -7,6 +7,10 @@
 	import RightIcon from '../assets/right-arrow.svg';
 	import FItemEntry from './FItemEntry.svelte';
 
+	import { baseURL } from './Constants';
+
+	import { menuItems } from './Menu';
+
 	export var fe;
 	export var path;
 
@@ -18,7 +22,7 @@
 		expanded = !expanded;
 		if (expanded) {
 			//reload
-			const resp = await fetch('/api/' + path + '/' + fe.name);
+			const resp = await fetch(baseURL + '/api/' + path + '/' + fe.name);
 			fChildrenPromise = resp.json();
 		}
 	}
@@ -34,14 +38,39 @@
 	function isFolder() {
 		return fe.entry_type === 'Folder';
 	}
+
+	function onRightClick(e) {
+		if ($menuItems.length != 0) {
+			$menuItems = [];
+		} else {
+			$menuItems = [
+				{
+					name: 'hr',
+				},
+				{
+					displayText: 'Delete',
+					onClick: async () => {
+						await fetch(baseURL + '/api/' + path + '/' + fe.name, {
+							method: 'DELETE',
+						});
+						window.location.pathname = window.location.pathname;
+					},
+				},
+			];
+		}
+	}
 </script>
 
 {@debug fChildrenPromise}
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="folder-item">
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<div class="folder-item-row" on:click|stopPropagation={onItemClick}>
+	<div
+		class="folder-item-row"
+		on:click|stopPropagation={onItemClick}
+		on:contextmenu={onRightClick}
+	>
 		<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 		{#if isFolder()}
 			<img

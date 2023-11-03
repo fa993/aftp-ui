@@ -1,5 +1,6 @@
 <script>
 	import { onMount } from 'svelte';
+	import { baseURL } from './Constants';
 
 	export let fEntry;
 	export let path;
@@ -7,7 +8,9 @@
 	$: contentPromise = new Promise(() => {});
 
 	onMount(() => {
-		contentPromise = fetch('/collab/' + path + '/').then((t) => t.json());
+		contentPromise = fetch(baseURL + '/collab/' + path + '/').then((t) =>
+			t.json()
+		);
 	});
 </script>
 

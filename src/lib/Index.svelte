@@ -1,9 +1,50 @@
 <script>
 	import AddIcon from '../assets/add.svg';
 	import FItemEntry from './FItemEntry.svelte';
+	import { menuItems } from './Menu';
 
 	export let fEntry;
 	export let path;
+
+	function addFEntry(e) {
+		//show context menu with 2 options
+		// we shall use stores
+		if ($menuItems.length != 0) {
+			$menuItems = [];
+		} else {
+			$menuItems = [
+				{
+					displayText: 'Add File',
+				},
+				{
+					name: 'hr',
+				},
+				{
+					displayText: 'Add Folder',
+				},
+			];
+		}
+
+		let node = e.target;
+		let buttonY =
+			node.getBoundingClientRect().y +
+			window.scrollY +
+			node.getBoundingClientRect().height;
+		let buttonX =
+			node.getBoundingClientRect().x +
+			window.scrollX +
+			node.getBoundingClientRect().width;
+
+		window.dispatchEvent(
+			new CustomEvent('contextmenu', {
+				bubbles: true,
+				detail: {
+					x: buttonX ?? e.clientX,
+					y: buttonY ?? e.clientY,
+				},
+			})
+		);
+	}
 </script>
 
 <center>
@@ -15,7 +56,9 @@
 	</h1>
 </center>
 <div class="fdisplay">
-	<div class="aouter">
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<div class="aouter" on:click|preventDefault|stopPropagation={addFEntry}>
 		<img src={AddIcon} class="aicon" alt="add-button" />
 	</div>
 </div>

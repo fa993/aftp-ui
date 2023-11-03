@@ -4,6 +4,8 @@
 	import { onMount } from 'svelte';
 	import Index from './lib/Index.svelte';
 	import Contents from './lib/Contents.svelte';
+	import ContextMenu from './lib/ContextMenu.svelte';
+	import { baseURL } from './lib/Constants';
 
 	$: path = location.pathname.substring(3);
 
@@ -20,10 +22,12 @@
 		} else {
 			document.title = 'Index';
 		}
-		const resp = await fetch('/api/' + path);
+		const resp = await fetch(baseURL + '/api/' + path);
 		fEntryPromise = resp.json();
 	});
 </script>
+
+<ContextMenu />
 
 <main>
 	{#await fEntryPromise then fEntry}
