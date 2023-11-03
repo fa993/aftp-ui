@@ -45,10 +45,12 @@ dims will fail because th new menu dims are not same as last
 	});
 
 	function rightClickContextMenu(e) {
-		if ($menuItems.length == 0) {
+		if ($menuItems.length == 0 || menuState) {
+			$menuItems = [];
 			menuState = false;
 			return;
 		}
+		e.preventDefault();
 		menuState = true;
 		browser = {
 			w: window.innerWidth,
@@ -111,10 +113,7 @@ dims will fail because th new menu dims are not same as last
 	</nav>
 {/if}
 
-<svelte:window
-	on:contextmenu|preventDefault={rightClickContextMenu}
-	on:click={onPageClick}
-/>
+<svelte:window on:contextmenu={rightClickContextMenu} on:click={onPageClick} />
 
 <style>
 	* {

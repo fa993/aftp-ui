@@ -9,7 +9,7 @@
 	function addFEntry(e) {
 		//show context menu with 2 options
 		// we shall use stores
-		if ($menuItems.length != 0) {
+		if (e.button == 2 || $menuItems.length != 0) {
 			$menuItems = [];
 		} else {
 			$menuItems = [

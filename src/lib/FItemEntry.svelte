@@ -45,9 +45,6 @@
 		} else {
 			$menuItems = [
 				{
-					name: 'hr',
-				},
-				{
 					displayText: 'Delete',
 					onClick: async () => {
 						await fetch(baseURL + '/api/' + path + '/' + fe.name, {
