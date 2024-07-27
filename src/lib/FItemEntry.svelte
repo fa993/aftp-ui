@@ -7,7 +7,7 @@
 	import RightIcon from '../assets/right-arrow.svg';
 	import FItemEntry from './FItemEntry.svelte';
 
-	import { baseURL } from './Constants';
+	import { baseURL, subpath } from './Constants';
 
 	import { menuItems } from './Menu';
 
@@ -29,9 +29,9 @@
 
 	function onItemClick(e) {
 		if (e.shiftKey) {
-			window.location.pathname = '/raw/' + path + '/' + fe.name;
+			window.location.pathname = subpath + '/raw/' + path + '/' + fe.name;
 		} else {
-			window.location.pathname = '/f/' + path + '/' + fe.name;
+			window.location.pathname = subpath + '/f/' + path + '/' + fe.name;
 		}
 	}
 

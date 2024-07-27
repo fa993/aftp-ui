@@ -5,9 +5,9 @@
 	import Index from './lib/Index.svelte';
 	import Contents from './lib/Contents.svelte';
 	import ContextMenu from './lib/ContextMenu.svelte';
-	import { baseURL } from './lib/Constants';
+	import { baseURL, getPath } from './lib/Constants';
 
-	$: path = location.pathname.substring(3);
+	$: path = getPath(location.pathname);
 
 	$: fEntryPromise = new Promise(() => {});
 
